@@ -1,6 +1,5 @@
 import array
 from asyncio.windows_events import NULL
-from itertools import pairwise
 from mimetypes import init
 from multiprocessing import Value
 import os
@@ -8,7 +7,6 @@ from pickle import FALSE
 import random
 import string
 from xml.etree.ElementTree import tostring
-import numpy
 def factorial(n):
     if n == 1:
         return 1
@@ -34,18 +32,18 @@ def fibbonaci(n):
     fibonacci_cache[n] = value
     return value
 
-def recursive_folders(path):
-    dirs = os.listdir(path)
-    file_string = ""
-    for file in dirs:
-        if os.path.isfile(f"{path}\\{file}"):
-            print(file)
-            
-        if os.path.isdir(f"{path}\\{file}"):
-            print(file)
-            
-            recursive_folders(f"{path}\\{file}")
-recursive_folders("C:\\Users\\Niklas\\Downloads\\Skema-PDF-New-DB\\Skema-PDF-New-DB\\skemawpf")
+#def recursive_folders(path):
+#    dirs = os.listdir(path)
+#    file_string = ""
+#    for file in dirs:
+#        if os.path.isfile(f"{path}\\{file}"):
+#            print(file)
+#            
+#        if os.path.isdir(f"{path}\\{file}"):
+#            print(file)
+#            
+#            recursive_folders(f"{path}\\{file}")
+#recursive_folders("C:\\Users\\Niklas\\Downloads\\Skema-PDF-New-DB\\Skema-PDF-New-DB\\skemawpf")
 def sortedarray():
     value = []
     for i in range(500):
@@ -139,19 +137,45 @@ class Lifo:
         self.head.next = remove.next 
         self.size -= 1
         return remove.data
+class LifoNode:
+    def __init__(self, data):
+        self.data = data
+        self.next = None
 class Fifo:
     def __init__(self):
-        self.head = Node("head")
-        self.Tail = Node("Tail")
+        self.head = None
+        self.Tail = None
         self.size = 0
     def push(self, value):
-        node = Node(value)
+        node = LifoNode(value)
         if self.size == 0:
             self.Tail = self.head = node
         else:
-            self.tail.next = node
-            self.tail = self.tail.next
+            
+            self.Tail.next = node
+            self.Tail = self.Tail.next
+            
         self.size += 1
+ 
+        
+        
+        
+    def pop(self):
+        if self.size == 0:
+            return None
+        remove = self.head
+        self.head = remove.next
+        self.size -= 1
+        return remove.data
+    def forward(self):
+        values = []
+        current = self.head
+        while current != None:
+            values.append(current.data)
+            current = current.next
+        print(values)
+        return values
+
 class TreeNode:
     def __init__(self, value):
         self.value = value
@@ -162,6 +186,8 @@ class Tree:
     def __init__(self):
         self.head = TreeNode(NULL)
         parent = self.head
-
-
+fifo = Fifo()
+for i in range(1, 10):
+    fifo.push(i)
+fifo.forward()
      
