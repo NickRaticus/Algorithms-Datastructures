@@ -154,7 +154,7 @@ class Fifo:
             
             self.Tail.next = node
             self.Tail = self.Tail.next
-            
+            print(self.Tail.data)
         self.size += 1
  
         
@@ -184,10 +184,37 @@ class TreeNode:
         self.right = None
 class Tree:
     def __init__(self):
-        self.head = TreeNode(NULL)
-        parent = self.head
+        self.root = None
+    
+    def push(self,Value):
+        if self.root == None:
+           node = TreeNode(Value)
+           self.root = node
+        else:
+            current = self.root
+            while current != None:
+                if current.value > Value:
+                    if current.left == None:
+                        current.left = TreeNode(Value)
+                        return
+                    else:
+                     current = current.left
+                elif current.value <= Value:
+                    if current.right == None:
+                        
+                        current.right = TreeNode(Value)
+                        
+                        return
+                    else:
+                     current = current.right
+
 fifo = Fifo()
+fifo.forward()
+tree = Tree()
 for i in range(1, 10):
     fifo.push(i)
+    tree.push(i)
+fifo.forward()
+fifo.pop()
 fifo.forward()
      
