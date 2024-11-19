@@ -185,6 +185,12 @@ class TreeNode:
 class Tree:
     def __init__(self):
         self.root = None
+    def pop(self, value):
+        if self.root == None:
+            return
+        else:
+
+        
     
     def push(self,Value):
         if self.root == None:
@@ -195,14 +201,17 @@ class Tree:
             while current != None:
                 if current.value > Value:
                     if current.left == None:
-                        current.left = TreeNode(Value)
+                        node = TreeNode(Value)
+                        node.parent = current
+                        current.left = node
                         return
                     else:
                      current = current.left
                 elif current.value <= Value:
                     if current.right == None:
-                        
-                        current.right = TreeNode(Value)
+                        node = TreeNode(Value)
+                        node.parent = current
+                        current.right = node
                         
                         return
                     else:
