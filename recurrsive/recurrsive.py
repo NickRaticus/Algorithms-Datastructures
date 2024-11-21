@@ -185,10 +185,43 @@ class TreeNode:
 class Tree:
     def __init__(self):
         self.root = None
+    def search(self, Value, current):
+        if self.root == None:
+            return
+        else:
+            if current.value == Value:
+
+                return current
+            else:
+                if current.value >= Value:
+                    current = current.left
+                    return self.search(Value, current)
+                elif current.value < Value:
+                    current = current.right
+                    return self.search(Value, current)
+
     def pop(self, value):
         if self.root == None:
             return
         else:
+            node = self.search(value, self.root)
+            left = node.left
+            right = node.right
+            parent = node.parent
+            if parent.left == node:
+                parent.left = None
+            if parent.right == node:
+                parent.right = None
+
+
+            node = None
+
+            if left != None:
+              left.parent = None
+              self.push(left.value)
+            if right != None:
+              right.parent = None
+              self.push(right.value)
 
         
     
@@ -198,32 +231,36 @@ class Tree:
            self.root = node
         else:
             current = self.root
+
             while current != None:
-                if current.value > Value:
+
+                if current.value >= Value:
                     if current.left == None:
                         node = TreeNode(Value)
                         node.parent = current
                         current.left = node
+                        print(f"{Value}, Value")
                         return
                     else:
                      current = current.left
-                elif current.value <= Value:
+                elif current.value < Value:
                     if current.right == None:
                         node = TreeNode(Value)
                         node.parent = current
                         current.right = node
-                        
+                        print(f"{Value}, Value")
                         return
                     else:
                      current = current.right
+
+
 
 fifo = Fifo()
 fifo.forward()
 tree = Tree()
 for i in range(1, 10):
-    fifo.push(i)
     tree.push(i)
-fifo.forward()
-fifo.pop()
-fifo.forward()
+    tree.push(3)
+    print(i)
+tree.pop(4)
      
