@@ -112,15 +112,7 @@ array2 = []
 
 def InsertInArrayBinary(arraysorted, element, current, workarray):
 
-    index = (
-        binarysearch(
-            arraysorted,
-            len(arraysorted),
-            element,
-            0,
-        )
-        - 1
-    )
+    index = (binarysearch(arraysorted, len(arraysorted), element, 0,)- 1)
     if index == current:
         workarray += [element]
         InsertInArrayBinary(arraysorted, element, current + 1, workarray)
@@ -365,7 +357,93 @@ class Tree:
                             return
                         else:
                             current = current.right
+sorted_list = []
+unsorted_list = [2,5,1,6,8,2,9,10,46]
+index_list = []
+def sortingalgo(sorted_list, unsorted_list, current, current_index, index, index_list):
+        if len(sorted_list) == len(unsorted_list)-1:
+            sorted_list += [unsorted_list[-1]]
+            
+        elif unsorted_list[current_index] == unsorted_list[-1]:
+            if sorted_list == []:
 
+              sorted_list += [current]
+              index_list += [index]
+              sortingalgo(sorted_list,unsorted_list, unsorted_list[0], 0, index, index_list)
+            else:
+                  isthere = False
+                  for i in index_list:
+                      if i == index:
+                            isthere = True
+                            sortingalgo(sorted_list,unsorted_list, 50, 0, index, index_list)
+                  if isthere == False:
+                      sorted_list += [current]
+                      index_list += [index]
+                      sortingalgo(sorted_list,unsorted_list, unsorted_list[0], 0, index, index_list)
+
+
+        elif current >= unsorted_list[current_index]:
+            isthere = False
+            for i in index_list:
+
+                if i == current_index:
+                    isthere = True
+            if isthere == True:
+                current_index = current_index+1
+                
+            else:
+              index = current_index
+              current = unsorted_list[current_index]
+              current_index = current_index+1
+            sortingalgo(sorted_list,unsorted_list, current, current_index, index, index_list)
+        elif current < unsorted_list[current_index]:
+            current_index = current_index+1
+            sortingalgo(sorted_list,unsorted_list, current, current_index, index, index_list)
+        
+
+    #if unsorted_list[current_index] == unsorted_list[-1]:
+    #    sorted_list += [current]
+    #else:
+    #    isthere = False
+    #    for i in index_list:
+    #        if i == unsorted_list[current_index]:
+    #            isthere = True
+    #            current_index = current_index+1
+    #            sortingalgo(sorted_list,unsorted_list, current, current_index, index, index_list)
+    #    if isthere == False:
+    #        if unsorted_list[current_index] > sorted_list[current_index]:
+    #          index_list += [current_index]
+    #          current_index = current_index+1
+    #          sorted_list += [unsorted_list[current_index]]
+    #          sortingalgo(sorted_list,unsorted_list, current, current_index, index, index_list)
+
+
+
+def insertsortingalgo(sorted_list, unsorted_list, current, current_index, index, index_list):
+    if len(unsorted_list) == current:
+        current = 0
+        insertsortingalgo(sorted_list,unsorted_list, current, current_index, index,index_list)
+    if len(unsorted_list) == current_index:
+        insertsortingalgo(sorted_list,unsorted_list, current, current_index, index,index_list)
+
+    if current == 0:
+        sorted_list = [2,5,1,6,8,2,9,10,46]
+        current = current+1
+        current_index = current_index+1
+        insertsortingalgo(sorted_list,unsorted_list, current, current_index, index,index_list)
+    else:
+            if sorted_list[current_index] > unsorted_list[current]:
+                current_index = current_index+1
+                insertsortingalgo(sorted_list,unsorted_list, current, current_index, index, index_list)
+            if sorted_list[current_index] <= unsorted_list[current]:
+                
+                    sorted_list[current_index+1] = unsorted_list[current_index]
+                    current_index = current_index+1                
+                current = current+1
+
+                insertsortingalgo(sorted_list, unsorted_list,current, current_index, index,index_list)
+            
+insertsortingalgo(sorted_list,unsorted_list,0,0,0,index_list)
 
 fifo = Fifo()
 fifo.forward()
