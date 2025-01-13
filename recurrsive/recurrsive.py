@@ -1,7 +1,7 @@
 import array
 from asyncio.windows_events import NULL
 from mimetypes import init
-from multiprocessing import Value
+from multiprocessing import Value, current_process
 import os
 from pickle import FALSE
 import random
@@ -417,31 +417,47 @@ def sortingalgo(sorted_list, unsorted_list, current, current_index, index, index
     #          sorted_list += [unsorted_list[current_index]]
     #          sortingalgo(sorted_list,unsorted_list, current, current_index, index, index_list)
 
+def insertinarray(unsorted_list, sorted_list, current_index, current):
+    
+    sortedlist1 = []
+    sortedlist2 = []
+    isinserted = False
+            
 
 
 def insertsortingalgo(sorted_list, unsorted_list, current, current_index, index, index_list):
     if len(unsorted_list) == current:
-        current = 0
         insertsortingalgo(sorted_list,unsorted_list, current, current_index, index,index_list)
     if len(unsorted_list) == current_index:
         insertsortingalgo(sorted_list,unsorted_list, current, current_index, index,index_list)
-
+ 
     if current == 0:
         sorted_list = [2,5,1,6,8,2,9,10,46]
         current = current+1
-        current_index = current_index+1
         insertsortingalgo(sorted_list,unsorted_list, current, current_index, index,index_list)
     else:
-            if sorted_list[current_index] > unsorted_list[current]:
+            if sorted_list[current_index] > sorted_list[current]:
                 current_index = current_index+1
                 insertsortingalgo(sorted_list,unsorted_list, current, current_index, index, index_list)
             if sorted_list[current_index] <= unsorted_list[current]:
-                
-                    sorted_list[current_index+1] = unsorted_list[current_index]
-                    current_index = current_index+1                
-                current = current+1
+                   currentitem = sorted_list[current]
+                   isinserted = False
+                   for i, value in enumerate(sorted_list):
+                       if value >= sorted_list[current] and isinserted == False:
+                           isinserted = True
+                           sorted_list[i] = sorted_list[current]
+                       elif i > current:
+                           if i == len(unsorted_list)-1:
+                               sorted_list += [unsorted_list[i]]
+                               break
+                           else:
+                            sorted_list[i+1] = unsorted_list[i]
 
-                insertsortingalgo(sorted_list, unsorted_list,current, current_index, index,index_list)
+                   unsorted_list = unsorted_list
+                   current_index = current_index+1
+                   current = current+1
+                    
+                   insertsortingalgo(sorted_list, unsorted_list,current, current_index, index,index_list)
             
 insertsortingalgo(sorted_list,unsorted_list,0,0,0,index_list)
 
