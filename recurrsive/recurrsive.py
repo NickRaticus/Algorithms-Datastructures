@@ -358,7 +358,7 @@ class Tree:
                         else:
                             current = current.right
 sorted_list = []
-unsorted_list = [2,5,1,6,8,2,9,10,46]
+unsorted_list = [2,5,1,46,6,8,2,9,10]
 index_list = []
 def sortingalgo(sorted_list, unsorted_list, current, current_index, index, index_list):
         if len(sorted_list) == len(unsorted_list)-1:
@@ -432,34 +432,87 @@ def insertsortingalgo(sorted_list, unsorted_list, current, current_index, index,
         insertsortingalgo(sorted_list,unsorted_list, current, current_index, index,index_list)
  
     if current == 0:
-        sorted_list = [2,5,1,6,8,2,9,10,46]
+        sorted_list = [2,5,1,46,6,8,2,9,10]
         current = current+1
         insertsortingalgo(sorted_list,unsorted_list, current, current_index, index,index_list)
     else:
             if sorted_list[current_index] > sorted_list[current]:
                 current_index = current_index+1
                 insertsortingalgo(sorted_list,unsorted_list, current, current_index, index, index_list)
-            if sorted_list[current_index] <= unsorted_list[current]:
+            if sorted_list[current_index] <= sorted_list[current]:
                    currentitem = sorted_list[current]
                    isinserted = False
+                   index = 0
+                   
                    for i, value in enumerate(sorted_list):
                        if value >= sorted_list[current] and isinserted == False:
                            isinserted = True
-                           sorted_list[i] = sorted_list[current]
-                       elif i > current:
-                           if i == len(unsorted_list)-1:
-                               sorted_list += [unsorted_list[i]]
+                           index = i
+                           if i == current:
                                break
-                           else:
-                            sorted_list[i+1] = unsorted_list[i]
 
-                   unsorted_list = unsorted_list
+                           sorted_list[i] = unsorted_list[current]
+                           if i >= index and i != current:
+                            isin = False
+                            for a in index_list:
+                                   if a == i and i != current:
+                                       isin = True
+                            if isin == False:
+                              if i == len(unsorted_list)-1:
+                                 sorted_list += [unsorted_list[i]]
+                                 break
+                              else:
+                                  if sorted_list[i+1] == unsorted_list[i]:
+                                     unsorted_list = sorted_list[0:index_list[-1]+1]+unsorted_list[index_list[-1]+1:]
+                                     sorted_list[i+1] = sorted_list[i]
+                                     index_list = []
+                                  else:
+                                   sorted_list[i+1] = unsorted_list[i]
+                                   index_list += [current]
+
+                       elif isinserted == True and i > current:
+                           break
+                       elif i > index and i != current and isinserted == True:
+                           isin = False
+                           for a in index_list:
+                                   if a == i and i != current:
+                                       isin = True
+                           if isin == False:
+                            if i == len(unsorted_list)-1:
+                                sorted_list += [unsorted_list[i]]
+                                break
+                            else:
+                             sorted_list[i+1] = unsorted_list[i]
+                           
+                   
                    current_index = current_index+1
                    current = current+1
                     
                    insertsortingalgo(sorted_list, unsorted_list,current, current_index, index,index_list)
-            
-insertsortingalgo(sorted_list,unsorted_list,0,0,0,index_list)
+def insertionSortRecursive(arr,n): 
+    # base case 
+    if n<=1: 
+        return
+      
+    # Sort first n-1 elements 
+    insertionSortRecursive(arr,n-1) 
+    '''Insert last element at its correct position 
+        in sorted array.'''
+    last = arr[n-1] 
+    j = n-2
+      
+      # Move elements of arr[0..i-1], that are 
+      # greater than key, to one position ahead 
+      # of their current position  
+    while (j>=0 and arr[j]>last): 
+        arr[j+1] = arr[j] 
+        j = j-1
+  
+    arr[j+1]=last             
+
+insertionSortRecursive(unsorted_list, len(unsorted_list))
+def bubblesort(unsorted_list, n):
+
 
 fifo = Fifo()
 fifo.forward()
