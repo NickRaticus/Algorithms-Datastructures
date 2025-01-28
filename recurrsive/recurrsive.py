@@ -511,9 +511,24 @@ def insertionSortRecursive(arr,n):
     arr[j+1]=last             
 
 insertionSortRecursive(unsorted_list, len(unsorted_list))
-def bubblesort(unsorted_list, n):
+def bubblesort(unsorted_list, n, i, j):
+        if unsorted_list[n] >= unsorted_list[n-1]:
+            bubblesort(unsorted_list, n-1, i, j)
 
-
+        else:
+            if n != 0:
+             unsorted_list[n], unsorted_list[n-1] = unsorted_list[n-1], unsorted_list[n]
+            if n == 0:
+                if j == i:
+                    return unsorted_list
+                else:
+                  j = i
+                  
+                  bubblesort(unsorted_list, len(unsorted_list)-1,i,j)
+            else:
+                i=i+1
+                bubblesort(unsorted_list, n-1, i,j)
+bubblesort([2,5,1,6,8,2,9,10,46], len(unsorted_list)-1, 0, 0)
 fifo = Fifo()
 fifo.forward()
 tree = Tree()
