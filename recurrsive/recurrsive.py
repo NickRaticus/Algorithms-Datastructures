@@ -7,7 +7,7 @@ from pickle import FALSE
 import random
 from re import S
 import string
-from xml.etree.ElementTree import tostring
+from xml.etree.ElementTree import TreeBuilder, tostring
 
 
 def factorial(n):
@@ -261,7 +261,6 @@ class Tree:
                 treelist.append(("left"))
                 self.PrintStructure(current.left, treelist)
             return
-        
     def PrintTree(self, current, treelist):
 
         if self.root == None:
@@ -269,21 +268,23 @@ class Tree:
         else:
 
             if current.left != None:
-                treelist.append(current.value)
                 self.PrintTree(current.left, treelist)
                 if current.right != None:
                     treelist.append(current.value)
                     self.PrintTree(current.right, treelist)
-                return
+                else:
+                   treelist.append(current.value)
+                return treelist
 
             if current.right != None:
                 if current.left != None:
-                    treelist.append(current.value)
+                    #treelist.append(current.value)
                     self.PrintTree(current.left, treelist)
                 treelist.append(current.value)
                 self.PrintTree(current.right, treelist)
-                return
+                return treelist
             treelist.append(current.value)
+            return treelist
 
     def pop(self, value):
         if self.root == None:
@@ -528,6 +529,10 @@ def bubblesort(unsorted_list, n, i, j):
             else:
                 i=i+1
                 bubblesort(unsorted_list, n-1, i,j)
+def quicksort(pivot,left, right, sourcelist):
+
+    if left and right == []:
+        
 bubblesort([2,5,1,6,8,2,9,10,46], len(unsorted_list)-1, 0, 0)
 fifo = Fifo()
 fifo.forward()
