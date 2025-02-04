@@ -532,6 +532,16 @@ def bubblesort(unsorted_list, n, i, j):
 def quicksort(pivot,left, right, sourcelist):
 
     if left and right == []:
+        pivot = [sourcelist[0]]
+        j = 1
+        while pivot >= sourcelist[j]:
+            left += [sourcelist[j]]
+            j = j+1
+        while pivot < sourcelist[j]:
+            right += [sourcelist[j]]
+            j = j+1
+
+        quicksort(pivot, left, right, sourcelist)
         
 bubblesort([2,5,1,6,8,2,9,10,46], len(unsorted_list)-1, 0, 0)
 fifo = Fifo()
