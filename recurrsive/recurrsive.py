@@ -529,21 +529,32 @@ def bubblesort(unsorted_list, n, i, j):
             else:
                 i=i+1
                 bubblesort(unsorted_list, n-1, i,j)
-def quicksort(pivot,left, right, sourcelist):
-
-    if left and right == []:
+def quicksort(sourcelist, output):
+        if sourcelist == []:
+            return
         pivot = [sourcelist[0]]
-        j = 1
-        while pivot >= sourcelist[j]:
-            left += [sourcelist[j]]
-            j = j+1
-        while pivot < sourcelist[j]:
-            right += [sourcelist[j]]
-            j = j+1
+        j = 0
+        i = 1
+        right = []
+        left = []
+        while (j < len(sourcelist)-1):
+            if pivot < [sourcelist[i]]:
+                right += [sourcelist[i]]
+                
+                
+                j = j+1
+                i = i+1
+            else:
+                    output += [sourcelist[i]]
+                    left += [sourcelist[i]]
+                    j = j+1
+                    i = i+1
+        output += pivot
 
-        quicksort(pivot, left, right, sourcelist)
         
-bubblesort([2,5,1,6,8,2,9,10,46], len(unsorted_list)-1, 0, 0)
+        quicksort(right, output)
+quicksort([2,5,3,1,6,8,2,9,10,46,9,3], [])        
+bubblesort([2,5,3,1,6,8,2,9,10,46,9], len(unsorted_list)-1, 0, 0)
 fifo = Fifo()
 fifo.forward()
 tree = Tree()
