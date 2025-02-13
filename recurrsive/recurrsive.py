@@ -553,6 +553,16 @@ def quicksort(sourcelist, output):
 
         
         quicksort(right, output)
+def mergesort(sourcelist, output):
+    if len(sourcelist) <= 2:
+       if sourcelist
+       output =+ sourcelist
+       for i in output:
+         if output[i] > output[i+1]:
+             output[i], output[i+1] = output[i+1], output[i]
+
+           
+
 quicksort([2,5,3,1,6,8,2,9,10,46,9,3], [])        
 bubblesort([2,5,3,1,6,8,2,9,10,46,9], len(unsorted_list)-1, 0, 0)
 fifo = Fifo()
