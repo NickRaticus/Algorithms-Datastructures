@@ -1,6 +1,7 @@
 import array
 from asyncio.windows_events import NULL
 from mimetypes import init
+from msilib import MSIMODIFY_MERGE
 from multiprocessing import Value, current_process
 import os
 from pickle import FALSE
@@ -8,7 +9,7 @@ import random
 from re import S
 import string
 from xml.etree.ElementTree import TreeBuilder, tostring
-
+import math
 
 def factorial(n):
     if n == 1:
@@ -554,15 +555,35 @@ def quicksort(sourcelist, output):
         
         quicksort(right, output)
 def mergesort(sourcelist, output):
+
     if len(sourcelist) <= 2:
-       if sourcelist
-       output =+ sourcelist
-       for i in output:
-         if output[i] > output[i+1]:
-             output[i], output[i+1] = output[i+1], output[i]
+       if len(sourcelist) == 1:
+           a = 0
+           for i in output:
+               if sourcelist[0] <= i:
+                   output[i] = output[i+1]
+                   if a == 0:
+                       output[i] = sourcelist[0]
+                       a = a+1
+       else: 
+            
+        output = sourcelist
+        
+        for i, a in enumerate(output):
+          if i == len(output)-1:
+             return output
+
+          elif output[i] > output[i+1]:
+              output[i], output[i+1] = output[i+1], output[i]
+        
+
+    elif len(sourcelist) > 2:
+        mergesort(sourcelist[0:math.ceil(len(sourcelist)/2)], output)
+        mergesort(sourcelist[math.ceil(len(sourcelist)/2):], output)
+        
 
            
-
+mergesort([2,5,3,1,6,8,2,9], [])
 quicksort([2,5,3,1,6,8,2,9,10,46,9,3], [])        
 bubblesort([2,5,3,1,6,8,2,9,10,46,9], len(unsorted_list)-1, 0, 0)
 fifo = Fifo()
