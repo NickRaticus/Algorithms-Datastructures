@@ -1,5 +1,6 @@
 import array
 from asyncio.windows_events import NULL
+from importlib.machinery import SOURCE_SUFFIXES
 from mimetypes import init
 from msilib import MSIMODIFY_MERGE
 from multiprocessing import Value, current_process
@@ -554,33 +555,45 @@ def quicksort(sourcelist, output):
 
         
         quicksort(right, output)
-def mergesort(sourcelist, output):
+def mergesort(sourcelist, left, right, mid):
 
-    if len(sourcelist) <= 2:
-       if len(sourcelist) == 1:
-           a = 0
-           for i in output:
-               if sourcelist[0] <= i:
-                   output[i] = output[i+1]
-                   if a == 0:
-                       output[i] = sourcelist[0]
-                       a = a+1
-       else: 
-            
-        output = sourcelist
-        
-        for i, a in enumerate(output):
-          if i == len(output)-1:
-             return output
-
-          elif output[i] > output[i+1]:
-              output[i], output[i+1] = output[i+1], output[i]
-        
-
-    elif len(sourcelist) > 2:
-        mergesort(sourcelist[0:math.ceil(len(sourcelist)/2)], output)
-        mergesort(sourcelist[math.ceil(len(sourcelist)/2):], output)
-        
+#    if len(sourcelist) <= 2:
+#       if len(sourcelist) == 1:
+#           a = 0
+#           for i in output:
+#               if sourcelist[0] <= i:
+#                   output[i] = output[i+1]
+#                   if a == 0:
+#                       output[i] = sourcelist[0]
+#                       a = a+1
+#       else: 
+#        if len(output) == 0:
+#         output += sourcelist
+#        else:
+#            for i, a in enumerate(sourcelist):
+#             if len(sourcelist)-1 == i:
+#                    break
+#             elif sourcelist[i] > sourcelist[i+1]:
+#              sourcelist[i], sourcelist[i+1] = sourcelist[i+1], sourcelist[i]
+#              output += sourcelist
+#
+#        for i, a in enumerate(output):
+#          if i == len(output)-1:
+#             return output
+#          elif len(output) == 4:
+#              try:
+#               if output[i] > output[i+2]:
+#                   output[i], output[i+2] = output[i+2], output[i]
+#              except:
+#                  continue
+#          if output[i] > output[i+1]:
+#              output[i], output[i+1] = output[i+1], output[i]
+#        
+#
+#    elif len(sourcelist) > 2:
+#        output = mergesort(sourcelist[0:math.ceil(len(sourcelist)/2)], output)
+#        mergesort(sourcelist[math.ceil(len(sourcelist)/2):], output)
+#        
 
            
 mergesort([2,5,3,1,6,8,2,9], [])
