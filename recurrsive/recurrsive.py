@@ -555,48 +555,39 @@ def quicksort(sourcelist, output):
 
         
         quicksort(right, output)
-def mergesort(sourcelist, left, right, mid):
+def merge(left, right):
+    """Merge sort merging function."""
 
-#    if len(sourcelist) <= 2:
-#       if len(sourcelist) == 1:
-#           a = 0
-#           for i in output:
-#               if sourcelist[0] <= i:
-#                   output[i] = output[i+1]
-#                   if a == 0:
-#                       output[i] = sourcelist[0]
-#                       a = a+1
-#       else: 
-#        if len(output) == 0:
-#         output += sourcelist
-#        else:
-#            for i, a in enumerate(sourcelist):
-#             if len(sourcelist)-1 == i:
-#                    break
-#             elif sourcelist[i] > sourcelist[i+1]:
-#              sourcelist[i], sourcelist[i+1] = sourcelist[i+1], sourcelist[i]
-#              output += sourcelist
-#
-#        for i, a in enumerate(output):
-#          if i == len(output)-1:
-#             return output
-#          elif len(output) == 4:
-#              try:
-#               if output[i] > output[i+2]:
-#                   output[i], output[i+2] = output[i+2], output[i]
-#              except:
-#                  continue
-#          if output[i] > output[i+1]:
-#              output[i], output[i+1] = output[i+1], output[i]
-#        
-#
-#    elif len(sourcelist) > 2:
-#        output = mergesort(sourcelist[0:math.ceil(len(sourcelist)/2)], output)
-#        mergesort(sourcelist[math.ceil(len(sourcelist)/2):], output)
-#        
+    left_index, right_index = 0, 0
+    result = []
+    while left_index < len(left) and right_index < len(right):
+        if left[left_index] < right[right_index]:
+            result.append(left[left_index])
+            left_index += 1
+        else:
+            result.append(right[right_index])
+            right_index += 1
+
+    result += left[left_index:]
+    result += right[right_index:]
+    return result
+
+
+def merge_sort(array):
+    """Merge sort algorithm implementation."""
+
+    if len(array) <= 1:  # base case
+        return array
+
+    # divide array in half and merge sort recursively
+    half = len(array) // 2
+    left = merge_sort(array[:half])
+    right = merge_sort(array[half:])
+
+    return merge(left, right)
 
            
-mergesort([2,5,3,1,6,8,2,9], [])
+merge_sort([2,5,3,1,6,8,2,9])
 quicksort([2,5,3,1,6,8,2,9,10,46,9,3], [])        
 bubblesort([2,5,3,1,6,8,2,9,10,46,9], len(unsorted_list)-1, 0, 0)
 fifo = Fifo()
