@@ -586,7 +586,28 @@ def merge_sort(array):
 
     return merge(left, right)
 
-           
+class MinHeap:
+    def __init__(self):
+        self.root = None
+    def search(self, Value, current):
+        if self.root == None:
+            return
+        else:
+            if current.value <= Value:
+
+                return current
+            else:
+
+                     self.search(Value, current.left)
+                     self.search(Value, current.right)
+    def push(self, Value):
+         if self.root == None:
+          node = TreeNode(Value)
+          self.root = node
+         else: 
+            node = self.search(Value, self.root)
+
+
 merge_sort([2,5,3,1,6,8,2,9])
 quicksort([2,5,3,1,6,8,2,9,10,46,9,3], [])        
 bubblesort([2,5,3,1,6,8,2,9,10,46,9], len(unsorted_list)-1, 0, 0)
