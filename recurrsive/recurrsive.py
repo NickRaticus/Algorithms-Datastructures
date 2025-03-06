@@ -593,9 +593,15 @@ class MinHeap:
         if self.root == None:
             return
         else:
-            if current.value <= Value:
+            if current.left == None or current.right == None:
 
                 return current
+            elif Value != None:
+              if current.value >= Value and Value != None:
+                  current = current.parent
+                  return self.search(Value, current)
+              elif current.value < Value and Value != None:
+                  return current
             else:
 
                      self.search(Value, current.left)
@@ -605,9 +611,25 @@ class MinHeap:
           node = TreeNode(Value)
           self.root = node
          else: 
-            node = self.search(Value, self.root)
+            new_node = TreeNode(Value)
+            parent = self.search(None, self.root)
+            if parent.right == None:
+                parent.right = new_node
+            else:
+                parent.left = new_node
+            new_node.parent = parent
+            node = self.search(Value, parent)
+
+            node
 
 
+
+heap = MinHeap()
+heap.push(5)
+heap.push(6)
+heap.push(2)
+heap.push(1)
+heap.push(3)
 merge_sort([2,5,3,1,6,8,2,9])
 quicksort([2,5,3,1,6,8,2,9,10,46,9,3], [])        
 bubblesort([2,5,3,1,6,8,2,9,10,46,9], len(unsorted_list)-1, 0, 0)
