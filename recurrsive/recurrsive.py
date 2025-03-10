@@ -593,11 +593,12 @@ class MinHeap:
         if self.root == None:
             return
         else:
-            if current.left == None or current.right == None:
-
+            if current.left == None or current.right == None or current.parent == None:
+                
                 return current
             elif Value != None:
               if current.value >= Value and Value != None:
+
                   current = current.parent
                   return self.search(Value, current)
               elif current.value < Value and Value != None:
@@ -613,14 +614,15 @@ class MinHeap:
          else: 
             new_node = TreeNode(Value)
             parent = self.search(None, self.root)
-            if parent.right == None:
+            if parent.right == None and Value <= parent.value:
                 parent.right = new_node
             else:
                 parent.left = new_node
+
             new_node.parent = parent
             node = self.search(Value, parent)
-
-            node
+            
+            node , new_node = new_node, node
 
 
 
