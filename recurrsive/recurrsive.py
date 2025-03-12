@@ -598,8 +598,13 @@ class MinHeap:
                 return current
             elif Value != None:
               if current.value >= Value and Value != None:
+                  new_current = current.parent
+                  new_current.value = current.value
 
+                  current, current.parent = current.parent, current
                   current = current.parent
+                  
+
                   return self.search(Value, current)
               elif current.value < Value and Value != None:
                   return current
@@ -621,8 +626,24 @@ class MinHeap:
 
             new_node.parent = parent
             node = self.search(Value, parent)
-            
-            node , new_node = new_node, node
+            new_node.parent = node.parent
+
+            if new_node.value <= node.value:
+                node_right = node.right
+                node.right = node_right.right
+                node_left = node.left
+                node_left.parent = new_node
+                new_node.right = node
+                node.left,new_node.left = new_node.left, node.left
+                
+                node.parent = new_node
+                if new_node.parent == None:
+                    self.root = new_node
+
+
+
+             
+
 
 
 
