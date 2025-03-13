@@ -593,14 +593,31 @@ class MinHeap:
         if self.root == None:
             return
         else:
-            if current.left == None or current.right == None or current.parent == None:
-                
-                return current
+
+            if Value == None:
+                if current.right == None:
+
+                    return current
+                elif current.left == None:
+                    return current
+                else:
+
+                   current_left = current.left
+                   current_right = current.right
+                   if current_left.left == None:
+                       return self.search(Value, current.left)
+                   elif current_right.right == None:
+                       return self.search(Value, current.right)
+                   else:
+                        self.search(Value, current.left)
+                        self.search(Value, current.right)
             elif Value != None:
-              if current.value >= Value and Value != None:
+              if current.value >= Value and Value != None and current.parent != None:
                   new_current = current.parent
                   new_current.value = current.value
-
+                  current_parent = current.parent
+                  current_parent.left = current.left
+                  current_parent.right = current.right
                   current, current.parent = current.parent, current
                   current = current.parent
                   
@@ -610,8 +627,11 @@ class MinHeap:
                   return current
             else:
 
-                     self.search(Value, current.left)
-                     self.search(Value, current.right)
+                     return self.search(Value, current.left)
+            if current.left == None or current.right == None or current.parent == None and Value != None:
+                
+                return current
+                     
     def push(self, Value):
          if self.root == None:
           node = TreeNode(Value)
