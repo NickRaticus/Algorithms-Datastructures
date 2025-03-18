@@ -612,7 +612,7 @@ class MinHeap:
                         self.search(Value, current.left)
                         self.search(Value, current.right)
             elif Value != None:
-              if current.value >= Value.value and Value != None:
+              if current.value >= Value.value and Value != None and Value.parent != None:
                   #new_current = current.parent
                   #new_current.value = current.value
                   #current_parent = current.parent
@@ -620,6 +620,7 @@ class MinHeap:
                   #current_parent.right = current.right
                   #current, current.parent = current.parent, current
                   #current = current.parent
+                  current_parent = current.parent
                   if current.left == Value:
                    current_left = Value.left
                    current.right, Value.right = Value.right, current.right
@@ -631,13 +632,27 @@ class MinHeap:
                    current.left, Value.left, = Value.left, current.left
                    Value.right = current
                    current.right = current_right
+                  if Value.right != None:
+                   Value_right = Value.right
+                   Value_right.parent = Value
+                  if Value.left != None:
+                   Value_left = Value.left
+                   Value_left.parent = Value
 
 
-                  Value.parent = current.parent
+                  Value.parent = current_parent
                   current.parent = Value
-                  
-
-                  return self.search(Value, current)
+                  Value_parent = Value.parent
+                  if Value_parent != None:
+                   if Value_parent.left == current:
+                       Value_parent.left = Value
+                   else:
+                       Value_parent.right = Value
+                  if Value.parent == None:
+                      self.root = Value
+                      return Value
+                  else:
+                   return self.search(Value, current)
               elif current.value < Value.value and Value.value != None:
                   return current
             else:
@@ -663,19 +678,19 @@ class MinHeap:
             new_node.parent = parent
 
             node = self.search(new_node, parent)
-            new_node.parent = node.parent
+            #new_node.parent = node.parent
 
-            if new_node.value <= node.value:
-                node_right = node.right
-                node.right = node_right.right
-                node_left = node.left
-                node_left.parent = new_node
-                new_node.right = node
-                node.left,new_node.left = new_node.left, node.left
-                
-                node.parent = new_node
-                if new_node.parent == None:
-                    self.root = new_node
+           # if new_node.value <= node.value:
+           #     node_right = node.right
+           #     node.right = node_right.right
+           #     node_left = node.left
+           #     node_left.parent = new_node
+           #     new_node.right = node
+           #     node.left,new_node.left = new_node.left, node.left
+           #     
+           #     node.parent = new_node
+            #if new_node.parent == None:
+            #        self.root = new_node
 
 
 
