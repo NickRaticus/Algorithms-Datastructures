@@ -624,6 +624,9 @@ class MinHeap:
                   if current.left == Value:
                    current_left = Value.left
                    current.right, Value.right = Value.right, current.right
+                   current_right = current.right
+                   if current_right != None:
+                    current_right.parent = current
                    Value.left = current
                    current.left = current_left
 
@@ -632,6 +635,9 @@ class MinHeap:
                    current.left, Value.left, = Value.left, current.left
                    Value.right = current
                    current.right = current_right
+                   current_left = current.left
+                   if current_left != None:
+                    current_left.parent = current
                   if Value.right != None:
                    Value_right = Value.right
                    Value_right.parent = Value
@@ -652,7 +658,7 @@ class MinHeap:
                       self.root = Value
                       return Value
                   else:
-                   return self.search(Value, current)
+                   return self.search(Value, Value.parent)
               elif current.value < Value.value and Value.value != None:
                   return current
             else:
