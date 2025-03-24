@@ -684,19 +684,40 @@ class MinHeap:
             new_node.parent = parent
 
             node = self.search(new_node, parent)
-            #new_node.parent = node.parent
+    def Del_Root(self, current):
+      if self.root == None:
+            return
+      if current == None:
+            parent = self.search(None, self.root)
+            
+            if self.root.left == parent:
+                parent.left = None
+            else:
+               parent.left = self.root.left
+            if self.root.right == parent: 
+                parent.right = None
+            else:
+               parent.right = self.root.right
+            parent.parent = None
+            self.root = parent
 
-           # if new_node.value <= node.value:
-           #     node_right = node.right
-           #     node.right = node_right.right
-           #     node_left = node.left
-           #     node_left.parent = new_node
-           #     new_node.right = node
-           #     node.left,new_node.left = new_node.left, node.left
-           #     
-           #     node.parent = new_node
-            #if new_node.parent == None:
-            #        self.root = new_node
+            return self.Del_Root(parent)
+      else:
+          if current.left == None and current.right == None:
+              return
+          elif current.left.value < current.value:
+              current.parent = current.left
+              current.left = current.left.left
+              current.right = current.left.right
+              current, current.left = current.left, current
+              return self.Del_Root(current)
+          elif current.right.value > current.value:
+                current.parent = current.right
+                current.left = current.right.left
+                current.right = current.right.right
+                current, current.right = current.right, current
+                return self.Del_Root(current)
+              
 
 
 
@@ -711,6 +732,7 @@ heap.push(6)
 heap.push(2)
 heap.push(1)
 heap.push(3)
+heap.Del_Root(None)
 merge_sort([2,5,3,1,6,8,2,9])
 quicksort([2,5,3,1,6,8,2,9,10,46,9,3], [])        
 bubblesort([2,5,3,1,6,8,2,9,10,46,9], len(unsorted_list)-1, 0, 0)
