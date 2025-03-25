@@ -694,13 +694,15 @@ class MinHeap:
                 parent.left = None
             else:
                parent.left = self.root.left
+               self.root.left.parent = parent
             if self.root.right == parent: 
                 parent.right = None
             else:
                parent.right = self.root.right
+               self.root.right.parent = parent
             parent.parent = None
             self.root = parent
-
+            
             return self.Del_Root(parent)
       else:
           if current.left == None and current.right == None:
