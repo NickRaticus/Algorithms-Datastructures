@@ -708,16 +708,47 @@ class MinHeap:
           if current.left == None and current.right == None:
               return
           elif current.left.value < current.value:
+              current_left = current.left
+              current_left.parent = current.parent
               current.parent = current.left
-              current.left = current.left.left
-              current.right = current.left.right
-              current, current.left = current.left, current
+#              if current.parent.left == current:
+#                  current.parent.left = current.left
+#              else:
+#                    current.parent.right = current.left
+
+              try:
+               current.left = current.left.left
+              except:
+                  pass
+              try: 
+               current.right = current.left.right
+              except:
+                    pass
+#              current, current.left = current.left, current
+              try:
+               current.left.parent = current
+              except:
+                  pass
+              try:
+               current.right.parent = current
+              except:
+                  pass
+              if current.parent.left == current.left:
+                  current.parent.left = current
+              if current.parent.right == current.right:
+                      current.parent.right = current
+              if current.parent.parent == None:
+
+               self.root = current.parent
               return self.Del_Root(current)
           elif current.right.value > current.value:
+                current_right = current.right
+                current_right.parent = current.parent
                 current.parent = current.right
                 current.left = current.right.left
                 current.right = current.right.right
                 current, current.right = current.right, current
+                current.parent = None
                 return self.Del_Root(current)
               
 
@@ -735,21 +766,3 @@ heap.push(2)
 heap.push(1)
 heap.push(3)
 heap.Del_Root(None)
-merge_sort([2,5,3,1,6,8,2,9])
-quicksort([2,5,3,1,6,8,2,9,10,46,9,3], [])        
-bubblesort([2,5,3,1,6,8,2,9,10,46,9], len(unsorted_list)-1, 0, 0)
-fifo = Fifo()
-fifo.forward()
-tree = Tree()
-for i in range(1, 10):
-    tree.push(i)
-    tree.push(3)
-    tree.push(4)
-    print(i)
-tree.pop(4)
-tree.push(1)
-treelist = []
-treelist1 = []
-tree.PrintTree(tree.root, treelist)
-tree.PrintStructure(tree.root, treelist1)
-print(treelist)
