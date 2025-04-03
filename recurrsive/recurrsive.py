@@ -711,10 +711,13 @@ class MinHeap:
               current_left = current.left
               current_left.parent = current.parent
               current.parent = current.left
-#              if current.parent.left == current:
-#                  current.parent.left = current.left
-#              else:
-#                    current.parent.right = current.left
+              try:
+               if current.parent.left == current:
+                   current.parent.left = current.left
+               elif current.parent.right == current:
+                     current.parent.right = current.left
+              except:
+                  pass
 
               try:
                current.left = current.left.left
@@ -733,10 +736,20 @@ class MinHeap:
                current.right.parent = current
               except:
                   pass
-              if current.parent.left == current.left:
+              if current.parent.left == current:
                   current.parent.left = current
-              if current.parent.right == current.right:
+              if current.parent.right == current:
                       current.parent.right = current
+              try:
+               current.left.parent = current
+              except:
+                  current.parent.left == current
+              current.parent.left = current
+              try: 
+                  if current.parent.parent.left == current:
+                      current.parent.parent.left = current.parent
+              except:
+                  pass
               if current.parent.parent == None:
 
                self.root = current.parent
