@@ -9,6 +9,8 @@ from pickle import FALSE
 import random
 from re import S
 import string
+from tkinter import N, NO
+from typing import Self
 from xml.etree.ElementTree import TreeBuilder, tostring
 import math
 
@@ -684,6 +686,25 @@ class MinHeap:
             new_node.parent = parent
 
             node = self.search(new_node, parent)
+    def Del_Node(self, node):
+        if self.root == None:
+            return
+        else:
+            node = self.search(None, self.root)
+            if node.left != None or node.right != None:
+                if node.left != None:
+                    self.Del_Node(node.left)
+                elif node.right != None:
+                    self.Del_Node(node.right)
+            if node.left == None and node.right == None:        
+             parent = node.parent
+             if parent.left == node:
+                 parent.left = None
+             elif parent.right == node:
+                 parent.right = None
+             else:
+                 return
+
     def Del_Root(self, current):
       if self.root == None:
             return
@@ -764,18 +785,76 @@ class MinHeap:
                 current.parent = None
                 return self.Del_Root(current)
               
+class MaxHeap:
+    def __init__(self):
+        self.root = None
+    def search(self, Value, current):
+         if self.root == None:
+             return
+         else:
+         
+             if Value == None:
+                 if current.right == None:
+         
+                     return current
+                 elif current.left == None:
+                     return current
+                 else:
+         
+                    current_left = current.left
+                    current_right = current.right
+                    if current_left.left == None:
+                        return self.search(Value, current.left)
+                    elif current_right.right == None:
+                        return self.search(Value, current.right)
+                    else:
+                         self.search(Value, current.left)
+                         self.search(Value, current.right)
+             elif Value != None:
+                 if current.value <= Value.value:
+                       
+                     return current
+                 else: 
+                     if current.left == None and current.right == None:
+                         return current
+                     else:
+                         if current.left == None:
+                             return self.search(Value, current.right)
+                         else: 
+                             return self.search(Value, current.left)   
+    def push(self, value):
+          if self.root == None:
+               node = TreeNode(value)
+               self.root = node
+          else:
+              new_node = TreeNode(value)
+              parent = self.search(new_node, self.root)
+              if parent.value <= value:
+                  parent.parent = new_node
+                  new_node.right = parent
+                  new_node.left = parent.right
+                  parent.right = None
 
+                  if parent.right == None:
+                      new_node.left = parent.left
+                      parent.left = None
+                  try:
+                   new_node.left.parent = new_node
+                  except:
+                        pass
+                  new_node.right.parent = new_node
+              else:
+                  if parent.left == None and parent.right == None:
+                      parent.left = new_node
+                      new_node.parent = parent
 
-
+    
              
 
 
 
 
-heap = MinHeap()
+heap = MaxHeap()
 heap.push(5)
-heap.push(6)
-heap.push(2)
-heap.push(1)
 heap.push(3)
-heap.Del_Root(None)
+heap.push(7)
