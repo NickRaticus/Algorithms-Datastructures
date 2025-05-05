@@ -821,7 +821,14 @@ class MaxHeap:
                          if current.left == None:
                              return self.search(Value, current.right)
                          else: 
-                             return self.search(Value, current.left)   
+                              current_right = current.right
+                              try:
+                               if Value.value >= current_right.value:
+                                   return self.search (Value, current.right)
+                               else: 
+                                   return self.search(Value, current.left)
+                              except:
+                                  return self.search(Value, current.left)  
     def push(self, value):
           if self.root == None:
                node = TreeNode(value)
@@ -830,19 +837,43 @@ class MaxHeap:
               new_node = TreeNode(value)
               parent = self.search(new_node, self.root)
               if parent.value <= value:
+                  if parent.parent != None:
+                   if parent.parent.left == parent:
+                       parent.parent.left = new_node
+                   else: 
+                       parent.parent.right = new_node
+                  new_node.parent = parent.parent
                   parent.parent = new_node
                   new_node.right = parent
                   new_node.left = parent.right
-                  parent.right = None
 
-                  if parent.right == None:
-                      new_node.left = parent.left
-                      parent.left = None
+                  #parent.right = None
+                  if parent.right != None:
+                   if parent.right == new_node.right or new_node.left:
+                       if new_node.right == None:
+                           new_node.right = parent.right
+                       parent.right = None
+                  elif parent.left != None:
+                   if parent.left == new_node.left or new_node.right:
+                       if new_node.right == None:
+                        new_node.right = parent.left
+                       else: 
+                           new_node.left = parent.left
+                      
+                     
+                       parent.left = None
                   try:
                    new_node.left.parent = new_node
                   except:
                         pass
-                  new_node.right.parent = new_node
+                  try:
+                   new_node.right.parent = new_node
+                  except: 
+                      pass
+
+                  if new_node.parent == None:
+                   self.root = new_node
+
               else:
                   if parent.left == None and parent.right == None:
                       parent.left = new_node
@@ -858,3 +889,8 @@ heap = MaxHeap()
 heap.push(5)
 heap.push(3)
 heap.push(7)
+heap.push(1)
+heap.push(4)
+heap.push(6)
+heap.push(8)
+heap.push(1)
